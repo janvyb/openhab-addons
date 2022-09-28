@@ -21,6 +21,9 @@ import org.openhab.binding.nuki.internal.dataexchange.NukiApiServlet;
 import org.openhab.binding.nuki.internal.handler.NukiBridgeHandler;
 import org.openhab.binding.nuki.internal.handler.NukiOpenerHandler;
 import org.openhab.binding.nuki.internal.handler.NukiSmartLockHandler;
+import org.openhab.binding.nuki.internal.handler.web.NukiWebAccountHandler;
+import org.openhab.binding.nuki.internal.handler.web.NukiWebOpenerHandler;
+import org.openhab.binding.nuki.internal.handler.web.NukiWebSmartLockHandler;
 import org.openhab.core.id.InstanceUUID;
 import org.openhab.core.io.net.http.HttpClientFactory;
 import org.openhab.core.net.HttpServiceUtil;
@@ -73,15 +76,21 @@ public class NukiHandlerFactory extends BaseThingHandlerFactory {
     protected @Nullable ThingHandler createHandler(Thing thing) {
         ThingTypeUID thingTypeUID = thing.getThingTypeUID();
 
-        if (NukiBindingConstants.THING_TYPE_BRIDGE_UIDS.contains(thingTypeUID)) {
+        if (NukiBindingConstants.THING_TYPE_BRIDGE.equals(thingTypeUID)) {
             String callbackUrl = createCallbackUrl(InstanceUUID.get());
             NukiBridgeHandler nukiBridgeHandler = new NukiBridgeHandler((Bridge) thing, httpClient, callbackUrl);
             nukiApiServlet.add(nukiBridgeHandler);
             return nukiBridgeHandler;
-        } else if (NukiBindingConstants.THING_TYPE_SMARTLOCK_UIDS.contains(thingTypeUID)) {
+        } else if (NukiBindingConstants.THING_TYPE_SMARTLOCK.equals(thingTypeUID)) {
             return new NukiSmartLockHandler(thing);
-        } else if (NukiBindingConstants.THING_TYPE_OPENER_UIDS.contains(thingTypeUID)) {
+        } else if (NukiBindingConstants.THING_TYPE_OPENER.equals(thingTypeUID)) {
             return new NukiOpenerHandler(thing);
+        } else if (NukiBindingConstants.THING_TYPE_WEB_ACCOUNT.equals(thingTypeUID)) {
+            return new NukiWebAccountHandler((Bridge) thing, httpClient);
+        } else if (NukiBindingConstants.THING_TYPE_WEB_SMARTLOCK.equals(thingTypeUID)) {
+            return new NukiWebSmartLockHandler(thing);
+        } else if (NukiBindingConstants.THING_TYPE_WEB_OPENER.equals(thingTypeUID)) {
+            return new NukiWebOpenerHandler(thing);
         }
         logger.warn("No valid Handler found for Thing[{}]!", thingTypeUID);
         return null;

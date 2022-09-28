@@ -12,7 +12,6 @@
  */
 package org.openhab.binding.nuki.internal.constants;
 
-import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -37,13 +36,13 @@ public class NukiBindingConstants {
     public static final ThingTypeUID THING_TYPE_BRIDGE = new ThingTypeUID(BINDING_ID, "bridge");
     public static final ThingTypeUID THING_TYPE_SMARTLOCK = new ThingTypeUID(BINDING_ID, "smartlock");
     public static final ThingTypeUID THING_TYPE_OPENER = new ThingTypeUID(BINDING_ID, "opener");
-
-    public static final Set<ThingTypeUID> THING_TYPE_BRIDGE_UIDS = Collections.singleton(THING_TYPE_BRIDGE);
-    public static final Set<ThingTypeUID> THING_TYPE_SMARTLOCK_UIDS = Collections.singleton(THING_TYPE_SMARTLOCK);
-    public static final Set<ThingTypeUID> THING_TYPE_OPENER_UIDS = Collections.singleton(THING_TYPE_OPENER);
+    public static final ThingTypeUID THING_TYPE_WEB_ACCOUNT = new ThingTypeUID(BINDING_ID, "webAccount");
+    public static final ThingTypeUID THING_TYPE_WEB_SMARTLOCK = new ThingTypeUID(BINDING_ID, "webSmartlock");
+    public static final ThingTypeUID THING_TYPE_WEB_OPENER = new ThingTypeUID(BINDING_ID, "webOpener");
 
     public static final Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = Stream
-            .of(THING_TYPE_BRIDGE_UIDS, THING_TYPE_SMARTLOCK_UIDS, THING_TYPE_OPENER_UIDS).flatMap(Set::stream)
+            .of(THING_TYPE_BRIDGE, THING_TYPE_WEB_ACCOUNT, THING_TYPE_SMARTLOCK, THING_TYPE_WEB_SMARTLOCK,
+                    THING_TYPE_OPENER, THING_TYPE_WEB_OPENER)
             .collect(Collectors.toSet());
 
     // Device Types
@@ -61,6 +60,9 @@ public class NukiBindingConstants {
     public static final String PROPERTY_NUKI_ID = "nukiId";
     public static final String PROPERTY_BRIDGE_ID = "bridgeId";
     public static final String PROPERTY_DEVICE_TYPE = "deviceType";
+    public static final String PROPERTY_SMARTLOCK_ID = "smartLockId";
+    public static final String PROPERTY_POLL_INTERVAL = "pollInterval";
+    public static final String PROPERTY_REFRESH_DELAY = "refreshDelay";
 
     // List of all Smart Lock Channel ids
     public static final String CHANNEL_SMARTLOCK_LOCK = "lock";

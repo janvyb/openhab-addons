@@ -37,13 +37,11 @@ import org.openhab.core.library.types.DateTimeType;
 import org.openhab.core.library.types.DecimalType;
 import org.openhab.core.library.types.OnOffType;
 import org.openhab.core.thing.Bridge;
-import org.openhab.core.thing.Channel;
 import org.openhab.core.thing.ChannelUID;
 import org.openhab.core.thing.Thing;
 import org.openhab.core.thing.ThingStatus;
 import org.openhab.core.thing.ThingStatusDetail;
 import org.openhab.core.thing.ThingStatusInfo;
-import org.openhab.core.thing.binding.BaseThingHandler;
 import org.openhab.core.thing.binding.BridgeHandler;
 import org.openhab.core.thing.binding.ThingHandler;
 import org.openhab.core.types.Command;
@@ -59,7 +57,7 @@ import org.slf4j.LoggerFactory;
  * @author Jan Vybíral - Initial contribution
  */
 @NonNullByDefault
-public abstract class AbstractNukiDeviceHandler<T extends NukiDeviceConfiguration> extends BaseThingHandler {
+public abstract class AbstractNukiDeviceHandler<T extends NukiDeviceConfiguration> extends AbstractNukiThingHandler {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
     private static final int JOB_INTERVAL = 60;
@@ -190,24 +188,6 @@ public abstract class AbstractNukiDeviceHandler<T extends NukiDeviceConfiguratio
      * @param state Current state of this thing as obtained from Bridge API
      */
     public abstract void refreshState(BridgeApiDeviceStateDto state);
-
-    protected <U> void updateState(String channelId, U state, Function<U, State> transform) {
-        Channel channel = thing.getChannel(channelId);
-        if (channel != null) {
-            updateState(channel.getUID(), state, transform);
-        }
-    }
-
-    protected void triggerChannel(String channelId, String event) {
-        Channel channel = thing.getChannel(channelId);
-        if (channel != null) {
-            triggerChannel(channel.getUID(), event);
-        }
-    }
-
-    protected <U> void updateState(ChannelUID channel, U state, Function<U, State> transform) {
-        updateState(channel, state == null ? UnDefType.NULL : transform.apply(state));
-    }
 
     protected State toDateTime(String dateTimeString) {
         try {

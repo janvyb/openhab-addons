@@ -14,4 +14,43 @@
 
   <name>openHAB Add-ons :: Bundles :: Nuki Binding</name>
 
+  <properties>
+    <bnd.importpackage>io.swagger.v3.oas.annotations.*;resolution:=optional</bnd.importpackage>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>io.swagger.codegen.v3</groupId>
+        <artifactId>swagger-codegen-maven-plugin</artifactId>
+        <version>3.0.35</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <inputSpec>${project.basedir}/src/main/resources/nuki-web-swagger.json</inputSpec>
+              <language>java</language>
+              <generateApis>false</generateApis>
+              <generateSupportingFiles>false</generateSupportingFiles>
+              <generateModelDocumentation>false</generateModelDocumentation>
+              <modelPackage>org.openhab.binding.nuki.api.model</modelPackage>
+              <configOptions>
+                <dateLibrary>java8</dateLibrary>
+              </configOptions>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-annotations</artifactId>
+      <version>2.1.9</version>
+    </dependency>
+  </dependencies>
 </project>

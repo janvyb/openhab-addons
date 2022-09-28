@@ -67,7 +67,6 @@ public class NukiBridgeHandler extends BaseBridgeHandler {
     private final String callbackUrl;
     @Nullable
     private ScheduledFuture<?> checkBridgeOnlineJob;
-    private NukiBridgeConfiguration config = new NukiBridgeConfiguration();
 
     public NukiBridgeHandler(Bridge bridge, HttpClient httpClient, @Nullable String callbackUrl) {
         super(bridge);
@@ -75,6 +74,8 @@ public class NukiBridgeHandler extends BaseBridgeHandler {
         this.callbackUrl = callbackUrl;
         this.httpClient = httpClient;
     }
+
+    private NukiBridgeConfiguration config = new NukiBridgeConfiguration();
 
     public @Nullable NukiHttpClient getNukiHttpClient() {
         return this.nukiHttpClient;

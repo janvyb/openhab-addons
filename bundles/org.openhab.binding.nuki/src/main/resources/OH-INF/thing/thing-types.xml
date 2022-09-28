@@ -2,7 +2,7 @@
 <thing:thing-descriptions bindingId="nuki"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:thing="https://openhab.org/schemas/thing-description/v1.0.0"
-	xsi:schemaLocation="https://openhab.org/schemas/thing-description/v1.0.0 https://openhab.org/schemas/thing-description-1.0.0.xsd">
+	xsi:schemaLocation="https://openhab.org/schemas/thing-description/v1.0.0 https://www.openhab.org/schemas/thing-description-1.0.0.xsd">
 
 	<!-- Nuki Bridge (Bridge Type) -->
 	<bridge-type id="bridge">
@@ -59,6 +59,57 @@
 			</parameter>
 		</config-description>
 	</bridge-type>
+
+	<!-- Nuki Web Account (Bridge Type) -->
+	<bridge-type id="webAccount">
+		<label>Nuki Web Account</label>
+		<description>TODO</description>
+		<config-description>
+			<parameter name="accessToken" type="text" required="true">
+				<label>Access Token</label>
+				<description>TODO</description>
+			</parameter>
+		</config-description>
+	</bridge-type>
+
+	<!-- Nuki Web Smart Lock (Thing Type) -->
+	<thing-type id="webSmartlock" listed="false">
+		<supported-bridge-type-refs>
+			<bridge-type-ref id="webAccount"/>
+		</supported-bridge-type-refs>
+		<label>Nuki Web Smart Lock</label>
+		<description>TODO</description>
+		<channels>
+			<channel id="lockState" typeId="smartlockState"/>
+			<channel id="lowBattery" typeId="system.low-battery"/>
+			<channel id="keypadLowBattery" typeId="system.low-battery"/>
+			<channel id="batteryLevel" typeId="system.battery-level"/>
+			<channel id="batteryCharging" typeId="smartLockBatteryCharging"/>
+			<channel id="doorsensorState" typeId="smartlockDoorState"/>
+		</channels>
+		<properties>
+			<property name="name"/>
+			<property name="firmwareVersion"/>
+			<property name="deviceType"/>
+		</properties>
+		<representation-property>nukiId</representation-property>
+		<config-description>
+			<parameter name="smartLockId" type="text" required="true" readOnly="true">
+				<label>Smart Lock ID</label>
+				<description>TODO</description>
+			</parameter>
+			<parameter name="pollInterval" type="integer" min="0" required="true">
+				<label>Poll Interval</label>
+				<description>TODO</description>
+				<default>60</default>
+			</parameter>
+			<parameter name="refreshDelay" type="integer" min="0" required="true">
+				<label>Refresh delay</label>
+				<description>TODO</description>
+				<default>5</default>
+			</parameter>
+		</config-description>
+	</thing-type>
 
 	<!-- Nuki Smart Lock (Thing Type) -->
 	<thing-type id="smartlock" listed="false">
@@ -135,6 +186,41 @@
 			<parameter name="nukiId" type="text" required="true" readOnly="true">
 				<label>Nuki ID</label>
 				<description>The decimal string that identifies the Nuki Opener.</description>
+			</parameter>
+		</config-description>
+	</thing-type>
+
+	<!-- Nuki Web Opener (Thing Type) -->
+	<thing-type id="webOpener" listed="false">
+		<supported-bridge-type-refs>
+			<bridge-type-ref id="webAccount"/>
+		</supported-bridge-type-refs>
+		<label>Nuki Web Opener</label>
+		<description>TODO</description>
+		<channels>
+			<channel id="openerState" typeId="openerState"/>
+			<channel id="openerMode" typeId="openerMode"/>
+			<channel id="openerLowBattery" typeId="system.low-battery"/>
+		</channels>
+		<properties>
+			<property name="name"/>
+			<property name="firmwareVersion"/>
+		</properties>
+		<representation-property>nukiId</representation-property>
+		<config-description>
+			<parameter name="smartLockId" type="text" required="true" readOnly="true">
+				<label>Smart Lock ID</label>
+				<description>TODO</description>
+			</parameter>
+			<parameter name="pollInterval" type="integer" min="0" required="true">
+				<label>Poll Interval</label>
+				<description>TODO</description>
+				<default>60</default>
+			</parameter>
+			<parameter name="refreshDelay" type="integer" min="0" required="true">
+				<label>Refresh delay</label>
+				<description>TODO</description>
+				<default>5</default>
 			</parameter>
 		</config-description>
 	</thing-type>
